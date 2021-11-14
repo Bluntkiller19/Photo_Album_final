@@ -12,19 +12,23 @@
     <div class="loginpanel">
 
         <asp:Panel ID="createpanel" runat="server" Visible="False">
-            <h2>Login</h2>
+            <h2>Sign Up</h2>
+            <asp:Label ID="Label1" CssClass="errormesage" runat="server" Text="Account already exists" ForeColor="Red" Visible="True"></asp:Label>
             <div >
-                <asp:TextBox ID="TextBox1" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
+                <asp:TextBox ID="name" class="alignusername" runat="server" placeholder = "Enter Name"></asp:TextBox>
             </div>
             <div >
-                <asp:TextBox ID="TextBox2" class="alignpassword" runat="server" placeholder = "Enter password"></asp:TextBox>
+                <asp:TextBox ID="createEmail" class="alignpassword" runat="server" placeholder = "Enter Email"></asp:TextBox>
+            </div>
+              <div >
+                <asp:TextBox ID="createPassword" class="aligncreatepassword" runat="server" placeholder = "Enter password"></asp:TextBox>
             </div>
             <div >
-                <asp:Button ID="Button1" class="btn" runat="server" Text="Login"/>
+                <asp:Button ID="signupbtn" class="btnsignup" runat="server" Text="Sign up" OnClick="Signupbtn"/>
             </div>
             <div>
                 <p>
-                    <asp:Button ID="cancel" class="alignforgot" runat="server" Text="Cancel" OnClick="cancel_Click"/>
+                    <asp:Button ID="cancel" class="aligncancel" runat="server" Text="Cancel" OnClick="cancel_Click"/>
                 </p>
             </div>
         </asp:Panel>
@@ -46,7 +50,25 @@
                     <asp:Button ID="create" class="alignforgot" runat="server" Text="Create Account" OnClick="create_Click" />
                 </p>
                 <p>
-                    <asp:Button ID="forrgot" class="aligncreatenew" runat="server" Text="Forgot password" />
+                    <asp:Button ID="forrgot" class="aligncreatenew" runat="server" Text="Forgot password" OnClick="forrgot_Click" />
+                </p>
+            </div>
+            </asp:Panel>
+
+            <asp:Panel ID="forgotpassword" runat="server" Visible="False">
+                <h2>Reset Pasword</h2>
+            <div >
+                <asp:TextBox ID="resetEmail" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
+            </div>
+            <div >
+                <asp:TextBox ID="resetpasword" class="alignpassword" runat="server" placeholder = "Enter password"></asp:TextBox>
+            </div>
+            <div >
+                <asp:Button ID="submit" class="btn" runat="server" Text="submit" OnClick="submit_Click" />
+            </div>
+            <div>
+                <p>
+                    <asp:Button ID="cancelreset" class="alignforgot" runat="server" Text="Cancel" OnClick="cancel_Click" />
                 </p>
             </div>
         </asp:Panel>

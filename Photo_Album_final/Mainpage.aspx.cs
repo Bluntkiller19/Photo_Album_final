@@ -17,16 +17,14 @@ namespace Photo_Album_final
 {
 	public partial class mainpage : System.Web.UI.Page
 	{
-		string connetionString;
+        string connetionString;
 		SqlConnection con;
 		SqlCommand cmd;
 		SqlDataReader datar;
 		String sql;
-
 		protected void Page_Load(object sender, EventArgs e)
 		{
             connetionString = @"Data Source=cmpg323project2sever.database.windows.net;Initial Catalog=Project2DB;User ID=CmpgAdmin;Password=Glasstuk1!";
-
             con = new SqlConnection(connetionString);
 
             con.Open();
