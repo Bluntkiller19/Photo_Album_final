@@ -11,7 +11,7 @@ namespace Photo_Album_final
 {
 
 
-    public partial class WebForm1
+    public partial class mainpage
     {
 
         /// <summary>
@@ -22,5 +22,14 @@ namespace Photo_Album_final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
     }
 }
