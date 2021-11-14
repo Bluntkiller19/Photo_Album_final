@@ -36,7 +36,7 @@
         <asp:Panel ID="Loginpanel" runat="server">
             <asp:Image CssClass="loginimage" ID="Image1" runat="server" ImageUrl="https://project2photostorage.blob.core.windows.net/projectphotos/470-4703547_icon-user-icon-hd-png-download.png" />
             <h2>Login</h2>
-            <asp:Label ID="Label2" CssClass="errormesage" runat="server" Text="Account already exists" ForeColor="Red" Visible="False"></asp:Label>
+            <asp:Label ID="Label2" CssClass="errormesagelogin" runat="server" Text="Incorrect login details" ForeColor="Red" Visible="False"></asp:Label>
             <div >
                 <asp:TextBox ID="Username" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
             </div>

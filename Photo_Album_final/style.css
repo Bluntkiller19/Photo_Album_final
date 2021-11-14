@@ -179,3 +179,12 @@ h2 {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
+.errormesagelogin {
+    text-align: center;
+    position: absolute;
+    margin: auto;
+    top: 90px;
+    left: 50%;
+    width: 200px;
+    transform: translateX(-50%) translateY(-50%);
+}

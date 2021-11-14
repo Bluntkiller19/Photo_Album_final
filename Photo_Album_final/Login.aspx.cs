@@ -43,7 +43,7 @@ namespace Photo_Album_final
             if (Username.Text == "" || Password.Text == "")
             {
                 Label2.Visible = true;
-                Label2.Text = "Fill in all text boxes";
+                Label2.Text = "Fill everyting in!";
                 createEmail.Text = "";
                 createPassword.Text = "";
                 name.Text = "";
@@ -54,7 +54,8 @@ namespace Photo_Album_final
             }
             else
             {
-                Label2.Text = "Incorrect login details";
+                Label2.Visible = true;
+                Label2.Text = "wrong details!";
             }
         }
 
