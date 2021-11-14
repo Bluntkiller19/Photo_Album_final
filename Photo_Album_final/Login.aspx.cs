@@ -33,7 +33,29 @@ namespace Photo_Album_final
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            connetionString = @"Data Source=cmpg323project2sever.database.windows.net;Initial Catalog=Project2DB;User ID=CmpgAdmin;Password=Glasstuk1!";
+            con = new SqlConnection(connetionString);
+            con.Open();
+            sql = "SELECT * FROM users WHERE user_email = '" + Username.Text + "'AND user_password = '" + Password.Text + "'";
+            cmd = new SqlCommand(sql, con);
+            datar = cmd.ExecuteReader();
 
+            if (Username.Text == "" || Password.Text == "")
+            {
+                Label2.Visible = true;
+                Label2.Text = "Fill in all text boxes";
+                createEmail.Text = "";
+                createPassword.Text = "";
+                name.Text = "";
+            }
+            else if (datar.Read())
+            {
+                Response.Redirect("Mainpage.aspx");
+            }
+            else
+            {
+                Label2.Text = "Incorrect login details";
+            }
         }
 
         protected void create_Click(object sender, EventArgs e)
