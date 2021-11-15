@@ -12,20 +12,21 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace Photo_Album_final
 {
 	public partial class mainpage : System.Web.UI.Page
 	{
-        string connetionString;
-		SqlConnection con;
+        string DbConnect = ConfigurationManager.ConnectionStrings["dbconection"].ConnectionString;
+        SqlConnection con;
 		SqlCommand cmd;
 		SqlDataReader datar;
 		String sql;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-            connetionString = @"Data Source=cmpg323project2sever.database.windows.net;Initial Catalog=Project2DB;User ID=CmpgAdmin;Password=Glasstuk1!";
-            con = new SqlConnection(connetionString);
+           
+            con = new SqlConnection(DbConnect);
 
             con.Open();
 

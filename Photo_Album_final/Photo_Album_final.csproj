@@ -124,6 +124,7 @@
   <ItemGroup>
     <Content Include="Login.aspx" />
     <Content Include="Mainpage.aspx" />
+    <Content Include="photos\welcome-to-the-team-1.jpg" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>

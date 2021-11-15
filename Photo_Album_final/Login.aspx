@@ -58,6 +58,7 @@
 
             <asp:Panel ID="forgotpassword" runat="server" Visible="False">
                 <h2>Reset Pasword</h2>
+                <asp:Label ID="Label3" CssClass="errormesage" runat="server" Text="Account already exists" ForeColor="Red" Visible="False"></asp:Label>
             <div >
                 <asp:TextBox ID="resetEmail" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
             </div>
