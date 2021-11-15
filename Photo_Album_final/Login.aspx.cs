@@ -30,7 +30,6 @@ namespace Photo_Album_final
 
         string connectionString = ConfigurationManager.AppSettings["Storageconnection"].ToString();
         string accountname = "project2photostorage";
-        //string accesskey = "xBEHJgBInQrP0OxrmOO8eHZrK2h76JwO4YNIL2ZHWBhLB5TjL917QGUWNQpUDQaHT/AWbIYBl6/MHZdDOhV2PA==";
 
 
         protected void Page_Load(object sender, EventArgs e)

@@ -9,10 +9,25 @@
 </head>
 
 <body>
+            
+
     <form id="form1" runat="server">
-        <div class="panel">
-            <asp:Panel ID="Panel1" runat="server"></asp:Panel>
+            
+        <div>     
+            <asp:Panel ID="photopanel" runat="server" Visible="False" CssClass="photopanel">.          
+                <asp:Button ID="Backbtn" runat="server" Text="Back" CssClass="backbtn" OnClick="Backbtn_Click" />
+                <asp:Image ID="Image1" runat="server" class="displayimage"/>   
+            </asp:Panel>
+
+            <asp:Panel ID="viewallpanel" runat="server" class="allpanel"></asp:Panel>
+        </div>        
+
+        <div class="navpanel">
+            <asp:Panel ID="navpanel"  runat="server"></asp:Panel>
         </div>
+        
+
+
     </form>
 </body>
 </html>

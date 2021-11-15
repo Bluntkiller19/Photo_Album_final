@@ -40,12 +40,12 @@ namespace Photo_Album_final
             {
                 ImageButton imgbtn = new ImageButton();
                 imgbtn.ImageUrl = datar.GetValue(4).ToString();
-                imgbtn.Width = Unit.Pixel(200);
-                imgbtn.Height = Unit.Pixel(200);
+                imgbtn.Width = Unit.Pixel(150);
+                imgbtn.Height = Unit.Pixel(150);
                 imgbtn.Style.Add("padding", "5px");
                 imgbtn.Style.Add("margin", "2px");
                 imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
-                Panel1.Controls.Add(imgbtn);
+                viewallpanel.Controls.Add(imgbtn);
             }
 
 
@@ -56,7 +56,15 @@ namespace Photo_Album_final
 
         void imgbtn_Click(object sender, ImageClickEventArgs e)
         {
-            
+            Image1.ImageUrl = ((ImageButton)sender).ImageUrl.ToString();
+
+            viewallpanel.Visible = false;
+            photopanel.Visible = true;
+        }
+        protected void Backbtn_Click(object sender, EventArgs e)
+        {
+            viewallpanel.Visible = true;
+            photopanel.Visible = false;
         }
     }
 }

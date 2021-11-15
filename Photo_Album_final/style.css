@@ -10,9 +10,32 @@ input:focus::placeholder {
     color: transparent;
 }
 
-.panel {
+.photopanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 500px;
+    width: 500px;
     margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
+}
+.allpanel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 500px;
+    width: 1325px;
+    transform: translateX(-50%) translateY(-50%);
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.navpanel {
+    top: 15px;
+    height: 50px;
+    margin: auto;
+    background-color: black;
 }
 .loginpanel {
     position: absolute;
@@ -187,4 +210,23 @@ h2 {
     left: 50%;
     width: 200px;
     transform: translateX(-50%) translateY(-50%);
+}
+
+.backbtn {   
+    top: 20px;
+    left: 20px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 50px;
+    position: absolute;
+    padding: 2px;
+
+    border-radius: 30px;
+}
+
+.displayimage{
+    height: 300px;
+    width: 300px;
 }
