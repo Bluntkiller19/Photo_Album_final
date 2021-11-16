@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head runat="server">
     <title></title>
     <link href="style.css" rel="stylesheet" />
@@ -19,21 +19,19 @@
                 <asp:Image ID="Image1" runat="server" class="displayimage"/>   
             </asp:Panel>
 
-            <asp:Panel ID="viewallpanel" runat="server" class="allpanel"></asp:Panel>
-        </div>        
+            <asp:Panel ID="viewallpanel" runat="server" class="allpanel" Visible="False"></asp:Panel>      
+             
+            <asp:Panel ID="navpanel" runat="server" class="navpanel">                    
+                <asp:Label ID="welcomelabel" CssClass="labelwelcome" runat="server" ></asp:Label>                    
+                <asp:Button ID="logout" CssClass="btnlogout" runat="server"  Text="Logout" OnClick="logout_Click" />
+            </asp:Panel>
 
-        <div class="navpanel">
-            <asp:Panel ID="navpanel"  runat="server">
-                <div>
-                    <asp:Label ID="Label1" CssClass="welcomlabel" runat="server" ></asp:Label>
-                </div>
-                <div>
-                    <asp:Button ID="logout" runat="server" CssClass="logoutbtn" Text="Logout" OnClick="logout_Click" />
-                </div>
-                
-                
+            <asp:Panel ID="searchpanel" runat="server" class="searchpanel" Visible="False">                    
+                <asp:Label ID="Label1" CssClass="labelwelcome" runat="server" ></asp:Label>                    
+                <asp:Button ID="btnupload" CssClass="btnupload" runat="server"  Text="upload photo" OnClick="btnupload_Click" />
             </asp:Panel>
         </div>
+       
         
 
 
