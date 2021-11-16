@@ -25,33 +25,42 @@ namespace Photo_Album_final
 		String sql;
 		protected void Page_Load(object sender, EventArgs e)
 		{
-           
-            con = new SqlConnection(DbConnect);
-
-            con.Open();
-
-            sql = "SELECT * FROM users";
-
-            cmd = new SqlCommand(sql, con);
-
-            datar = cmd.ExecuteReader();
-
-            while (datar.Read())
+            if (Session["Username"] != null)
             {
-                ImageButton imgbtn = new ImageButton();
-                imgbtn.ImageUrl = datar.GetValue(4).ToString();
-                imgbtn.Width = Unit.Pixel(150);
-                imgbtn.Height = Unit.Pixel(150);
-                imgbtn.Style.Add("padding", "5px");
-                imgbtn.Style.Add("margin", "2px");
-                imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
-                viewallpanel.Controls.Add(imgbtn);
+                Label1.Text = Session["Username"].ToString();
+
+                con = new SqlConnection(DbConnect);
+
+                con.Open();
+
+                sql = "SELECT * FROM users";
+
+                cmd = new SqlCommand(sql, con);
+
+                datar = cmd.ExecuteReader();
+
+                while (datar.Read())
+                {
+                    ImageButton imgbtn = new ImageButton();
+                    imgbtn.ImageUrl = datar.GetValue(4).ToString();
+                    imgbtn.Width = Unit.Pixel(150);
+                    imgbtn.Height = Unit.Pixel(150);
+                    imgbtn.Style.Add("padding", "5px");
+                    imgbtn.Style.Add("margin", "2px");
+                    imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
+                    viewallpanel.Controls.Add(imgbtn);
+
+
+                  
+                }  
+                datar.Close();   
+                cmd.Dispose();  
+                con.Close();
             }
-
-
-            datar.Close();
-            cmd.Dispose();
-            con.Close();
+            else
+            {
+                logout.Text = "Login";
+            }
         }
 
         void imgbtn_Click(object sender, ImageClickEventArgs e)
@@ -65,6 +74,20 @@ namespace Photo_Album_final
         {
             viewallpanel.Visible = true;
             photopanel.Visible = false;
+        }
+
+        protected void logout_Click(object sender, EventArgs e)
+        {
+            if (logout.Text == "Logout")
+            {
+                Session.RemoveAll();
+                Response.Redirect("Login.aspx");
+            }
+            else if (logout.Text == "Login")
+            {
+                Label1.Text = "Please login";
+                Response.Redirect("Login.aspx");
+            }
         }
     }
 }

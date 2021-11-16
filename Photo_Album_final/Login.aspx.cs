@@ -49,13 +49,15 @@ namespace Photo_Album_final
             {
                 Label2.Visible = true;
                 Label2.Text = "Fill everyting in!";
-                createEmail.Text = "";
-                createPassword.Text = "";
-                name.Text = "";
+                Username.Text = "";
+                Password.Text = "";
             }
             else if (datar.Read())
             {
+                Session["Username"] = Username.Text;
                 Response.Redirect("Mainpage.aspx");
+                Username.Text = "";
+                Password.Text = "";
             }
             else
             {
@@ -215,7 +217,6 @@ namespace Photo_Album_final
                 }
 
             }
-            
         }
     }
 }

@@ -23,7 +23,16 @@
         </div>        
 
         <div class="navpanel">
-            <asp:Panel ID="navpanel"  runat="server"></asp:Panel>
+            <asp:Panel ID="navpanel"  runat="server">
+                <div>
+                    <asp:Label ID="Label1" CssClass="welcomlabel" runat="server" ></asp:Label>
+                </div>
+                <div>
+                    <asp:Button ID="logout" runat="server" CssClass="logoutbtn" Text="Logout" OnClick="logout_Click" />
+                </div>
+                
+                
+            </asp:Panel>
         </div>
         
 
