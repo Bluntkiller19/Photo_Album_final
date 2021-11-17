@@ -51,7 +51,7 @@ input:focus::placeholder {
     transform: translateX(-50%) translateY(-50%);
     height: 350px;
     width: 250px;
-    background-color: rgb(255, 255, 255, 0.8)
+    background-color: rgb(255, 255, 255, 0.8);
 }
 
 .alignusername {
@@ -226,13 +226,13 @@ h2 {
 }
 
 .backbtn {   
-    top: 20px;
+    top: 15px;
     left: 20px;
     color: azure;
     background-color: darkslategray;
     font-weight: bold;
     font-size: 15px;
-    width: 50px;
+    width: 60px;
     position: absolute;
     padding: 2px;
 
@@ -259,7 +259,7 @@ h2 {
 
 .btnlogout {
     position: absolute;
-    top: 15px;
+    top: 12.5px;
     Right: 20px;
     color: black;
     background-color: azure;
@@ -296,4 +296,122 @@ h2 {
     width: 110px;
     padding: 2px;
     border-radius: 30px;
+}
+
+.upload {
+    position: absolute;
+    top: 15px;
+    right: 150px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.btnssave {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 75px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.photoname {
+    position: absolute;
+    top: 50px;
+    right: 150px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.uploaderror {
+    text-align: center;
+    position: absolute;
+    color: azure;
+    font-weight: 200;
+    margin: auto;
+    top: 85px;
+    left: 50%;
+    width: 250px;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.welcome {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    color: azure;
+    padding: 2px;
+    font-weight: bold;
+}
+
+.downloadbtn {
+    bottom: 15px;
+    right: 20px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 100px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.sharebtn {
+    top: 15px;
+    right: 20px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 60px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.Changenamebtn {
+    bottom: 15px;
+    left: 20px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 120px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.changename {
+    position: absolute;
+    bottom: 16px;
+    right: 150px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.deletebtn {
+    bottom: 50px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 100px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
 }

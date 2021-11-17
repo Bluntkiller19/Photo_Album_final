@@ -88,10 +88,6 @@ namespace Photo_Album_final
         {
 
             con = new SqlConnection(DbConnect);
-            /*con.Open();
-            sql = "SELECT * FROM users WHERE user_email = '" + createEmail.Text + "'";
-            cmd = new SqlCommand(sql, con);
-            datar = cmd.ExecuteReader();*/
 
 
             if (resetpasword.Text == "" || resetEmail.Text == "")
@@ -175,13 +171,6 @@ namespace Photo_Album_final
                         PublicAccess = BlobContainerPublicAccessType.Blob
                     });
 
-                   /* CloudBlockBlob cblob = cont.GetBlockBlobReference("gamingPFP.png");
-
-                    using (Stream file = System.IO.File.OpenRead(@"C:\Users\mstro\OneDrive\Pictures\gamingPFP.png"))
-                    {
-                        cblob.UploadFromStream(file);
-                    }*/
-
                     con.Close();
 
                     con.Open();
@@ -202,12 +191,6 @@ namespace Photo_Album_final
                     con.Close();
                     Loginpanel.Visible = true;
                     createpanel.Visible = false;
-                    /*Label1.Visible = true;
-                    Label1.Text = "Could not create account or storage";
-                    createEmail.Text = "";
-                    createPassword.Text = "";
-                    name.Text = "";*/
-
                 }
                 catch
                 {
