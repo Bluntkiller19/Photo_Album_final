@@ -22,7 +22,7 @@ namespace Photo_Album_final
         SqlConnection con;
         SqlCommand cmd;
         SqlDataReader datar;
-        String sql, sqlinsert, sqlupdate;
+        String sql, sqlinsert, sqlupdate, sqldelete;
         SqlDataAdapter adpt;
         String userid = "";
         string connectionString = ConfigurationManager.AppSettings["Storageconnection"].ToString();
@@ -265,9 +265,38 @@ namespace Photo_Album_final
         }
         protected void Downloadbtn_Click(object sender, EventArgs e)
         {
+            string url = Image1.ImageUrl.ToString();
+            String name = System.IO.Path.GetFileName(url);
+            string folderName = Server.MapPath(@"~\Photos\");
+
             if (Downloadbtn.Text == "Download")
             {
+                StorageCredentials creden = new StorageCredentials(accountname, connectionString);
+                CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                CloudBlobClient client = acc.CreateCloudBlobClient();
+                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
 
+                if (!Directory.Exists(folderName))
+                {
+                    Directory.CreateDirectory(folderName);
+                    CloudBlockBlob cblob = cont.GetBlockBlobReference(name);
+
+                    Stream file = System.IO.File.OpenWrite(folderName + name);
+
+                    cblob.DownloadToStream(file);
+                    changelbl.Visible = true;
+                    changelbl.Text = folderName;
+                }
+                else
+                {
+                    CloudBlockBlob cblob = cont.GetBlockBlobReference(name);
+
+                    Stream file = System.IO.File.OpenWrite(folderName + name);
+
+                    cblob.DownloadToStream(file);
+                    changelbl.Visible = true;
+                    changelbl.Text = folderName;
+                }
             }
             else if (Downloadbtn.Text == "Save")
             {
@@ -279,7 +308,7 @@ namespace Photo_Album_final
 
                         con.Open();
 
-                        sql = "SELECT * FROM photos WHERE photo_path = '" + Image1.ImageUrl.ToString() + "' AND users_user_id = '" + userid + "'";
+                        sql = "SELECT * FROM photos WHERE photo_name = '" + changenametxb.Text + "' AND users_user_id = '" + userid + "'";
 
                         cmd = new SqlCommand(sql, con);
 
@@ -358,6 +387,37 @@ namespace Photo_Album_final
 
         protected void deletebtn_Click(object sender, EventArgs e)
         {
+            string url = Image1.ImageUrl.ToString();
+            String name = System.IO.Path.GetFileName(url);
+
+            try
+            {
+                con.Open();
+                adpt = new SqlDataAdapter();
+                sqldelete = "DELETE photos WHERE photo_path = '" + url + "'";
+                cmd = new SqlCommand(sqldelete, con);
+
+                adpt.DeleteCommand = new SqlCommand(sqldelete, con);
+                adpt.DeleteCommand.ExecuteNonQuery();
+
+                StorageCredentials creden = new StorageCredentials(accountname, connectionString);
+                CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                CloudBlobClient client = acc.CreateCloudBlobClient();
+                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
+
+                CloudBlockBlob cblob = cont.GetBlockBlobReference(name);
+                cblob.Delete();
+
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
+                Response.Redirect("Mainpage.aspx");
+            }
+            catch
+            {
+                changelbl.Visible = true;
+                changelbl.Text = "could not delete photo!";
+            }
 
         }
     }
