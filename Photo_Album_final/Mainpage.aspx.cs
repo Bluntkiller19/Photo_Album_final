@@ -135,7 +135,7 @@ namespace Photo_Album_final
             if (FileUpload1.HasFile)
             {
                 filename = FileUpload1.FileName;
-                path = Server.MapPath("~\\photos\\") + System.IO.Path.GetFileName(FileUpload1.FileName);
+                path = Server.MapPath("~\\photos\\");
                 ext = System.IO.Path.GetExtension(filename);
 
                 if (ext == ".jpg" || ext == ".png" || ext == ".gif")
@@ -174,66 +174,135 @@ namespace Photo_Album_final
                         {
                             try
                             {
-
-                                FileUpload1.SaveAs(path);
-
-                                StorageCredentials creden = new StorageCredentials(accountname, connectionString);
-                                CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
-                                CloudBlobClient client = acc.CreateCloudBlobClient();
-                                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
-
-                                cont.CreateIfNotExists();
-                                cont.SetPermissions(new BlobContainerPermissions
+                                if (!Directory.Exists(path))
                                 {
-                                    PublicAccess = BlobContainerPublicAccessType.Blob
-                                });
+                                    Directory.CreateDirectory(path);
+                                    path += System.IO.Path.GetFileName(FileUpload1.FileName);
+                                    
+
+                                    FileUpload1.SaveAs(path);
+
+                                    StorageCredentials creden = new StorageCredentials(accountname, connectionString);
+                                    CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                                    CloudBlobClient client = acc.CreateCloudBlobClient();
+                                    CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
+
+                                    cont.CreateIfNotExists();
+                                    cont.SetPermissions(new BlobContainerPermissions
+                                    {
+                                        PublicAccess = BlobContainerPublicAccessType.Blob
+                                    });
 
 
-                                CloudBlockBlob cblob = cont.GetBlockBlobReference(FileUpload1.FileName);
+                                    CloudBlockBlob cblob = cont.GetBlockBlobReference(FileUpload1.FileName);
 
-                                using (Stream file = System.IO.File.OpenRead(path))
-                                {
-                                    cblob.UploadFromStream(file);
+                                    using (Stream file = System.IO.File.OpenRead(path))
+                                    {
+                                        cblob.UploadFromStream(file);
+                                    }
+
+                                    con = new SqlConnection(DbConnect);
+
+                                    con.Open();
+
+                                    sql = "SELECT * FROM users WHERE user_name = '" + welcomelabel.Text + "'";
+
+                                    cmd = new SqlCommand(sql, con);
+
+                                    datar = cmd.ExecuteReader();
+                                    if (datar.Read())
+                                        Userid = datar.GetValue(0).ToString();
+
+                                    con.Close();
+                                    datar.Close();
+                                    cmd.Dispose();
+
+
+                                    con.Open();
+
+                                    adpt = new SqlDataAdapter();
+
+                                    sqlinsert = "INSERT INTO photos (users_user_id, photo_name, photo_path) values( '" + Userid + "','" + photoname + "','" + azurepath + "')";
+
+                                    cmd = new SqlCommand(sqlinsert, con);
+                                    adpt.InsertCommand = new SqlCommand(sqlinsert, con);
+                                    adpt.InsertCommand.ExecuteNonQuery();
+
+
+                                    File.Delete(path);
+
+                                    Response.Redirect("Mainpage.aspx");
+                                    viewallpanel.Visible = true;
+                                    searchpanel.Visible = true;
+                                    photopanel.Visible = false;
+                                    uploadpanel.Visible = false;
+                                    uploaderror.Visible = false;
+                                    uploaderror.Text = "";
+                                    fototxb.Text = "";
                                 }
+                                else
+                                {
+                                    path += System.IO.Path.GetFileName(FileUpload1.FileName);
+                                    FileUpload1.SaveAs(path);
 
-                                con = new SqlConnection(DbConnect);
+                                    StorageCredentials creden = new StorageCredentials(accountname, connectionString);
+                                    CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                                    CloudBlobClient client = acc.CreateCloudBlobClient();
+                                    CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
 
-                                con.Open();
-
-                                sql = "SELECT * FROM users WHERE user_name = '" + welcomelabel.Text + "'";
-
-                                cmd = new SqlCommand(sql, con);
-
-                                datar = cmd.ExecuteReader();
-                                if (datar.Read())
-                                    Userid = datar.GetValue(0).ToString();
-
-                                con.Close();
-                                datar.Close();
-                                cmd.Dispose();
-
-
-                                con.Open();
-
-                                adpt = new SqlDataAdapter();
-
-                                sqlinsert = "INSERT INTO photos (users_user_id, photo_name, photo_path) values( '" + Userid + "','" + photoname + "','" + azurepath + "')";
-
-                                cmd = new SqlCommand(sqlinsert, con);
-                                adpt.InsertCommand = new SqlCommand(sqlinsert, con);
-                                adpt.InsertCommand.ExecuteNonQuery();
+                                    cont.CreateIfNotExists();
+                                    cont.SetPermissions(new BlobContainerPermissions
+                                    {
+                                        PublicAccess = BlobContainerPublicAccessType.Blob
+                                    });
 
 
-                                File.Delete(path);
+                                    CloudBlockBlob cblob = cont.GetBlockBlobReference(FileUpload1.FileName);
 
-                                Response.Redirect("Mainpage.aspx");
-                                viewallpanel.Visible = true;
-                                searchpanel.Visible = true;
-                                photopanel.Visible = false;
-                                uploadpanel.Visible = false;
-                                uploaderror.Visible = false;
-                                uploaderror.Text = "";
-                                fototxb.Text = "";
+                                    using (Stream file = System.IO.File.OpenRead(path))
+                                    {
+                                        cblob.UploadFromStream(file);
+                                    }
+
+                                    con = new SqlConnection(DbConnect);
+
+                                    con.Open();
+
+                                    sql = "SELECT * FROM users WHERE user_name = '" + welcomelabel.Text + "'";
+
+                                    cmd = new SqlCommand(sql, con);
+
+                                    datar = cmd.ExecuteReader();
+                                    if (datar.Read())
+                                        Userid = datar.GetValue(0).ToString();
+
+                                    con.Close();
+                                    datar.Close();
+                                    cmd.Dispose();
+
+
+                                    con.Open();
+
+                                    adpt = new SqlDataAdapter();
+
+                                    sqlinsert = "INSERT INTO photos (users_user_id, photo_name, photo_path) values( '" + Userid + "','" + photoname + "','" + azurepath + "')";
+
+                                    cmd = new SqlCommand(sqlinsert, con);
+                                    adpt.InsertCommand = new SqlCommand(sqlinsert, con);
+                                    adpt.InsertCommand.ExecuteNonQuery();
+
+
+                                    File.Delete(path);
+
+                                    Response.Redirect("Mainpage.aspx");
+                                    viewallpanel.Visible = true;
+                                    searchpanel.Visible = true;
+                                    photopanel.Visible = false;
+                                    uploadpanel.Visible = false;
+                                    uploaderror.Visible = false;
+                                    uploaderror.Text = "";
+                                    fototxb.Text = "";
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -266,37 +335,77 @@ namespace Photo_Album_final
         protected void Downloadbtn_Click(object sender, EventArgs e)
         {
             string url = Image1.ImageUrl.ToString();
-            String name = System.IO.Path.GetFileName(url);
-            string folderName = Server.MapPath(@"~\Photos\");
+            String Imagename = System.IO.Path.GetFileName(url);
+            String ext = System.IO.Path.GetExtension(Imagename);
+            String name = "";
+            Response.ClearContent();
+            Response.Buffer = true;
 
             if (Downloadbtn.Text == "Download")
             {
+
+                con = new SqlConnection(DbConnect);
+
+                con.Open();
+
+                sql = "SELECT * FROM photos WHERE photo_path = '" + url + "'";
+
+                cmd = new SqlCommand(sql, con);
+
+                datar = cmd.ExecuteReader();
+
+                if (datar.Read())
+                {
+                    name = datar.GetValue(2).ToString();
+                }
+                name += ext;
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
+
                 StorageCredentials creden = new StorageCredentials(accountname, connectionString);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
                 CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
 
-                if (!Directory.Exists(folderName))
-                {
-                    Directory.CreateDirectory(folderName);
-                    CloudBlockBlob cblob = cont.GetBlockBlobReference(name);
+                CloudBlockBlob cblob = cont.GetBlockBlobReference(Imagename);
 
-                    Stream file = System.IO.File.OpenWrite(folderName + name);
+                 MemoryStream memstream = new MemoryStream();
 
-                    cblob.DownloadToStream(file);
-                    changelbl.Visible = true;
-                    changelbl.Text = folderName;
-                }
-                else
-                {
-                    CloudBlockBlob cblob = cont.GetBlockBlobReference(name);
 
-                    Stream file = System.IO.File.OpenWrite(folderName + name);
+                cblob.DownloadToStream(memstream);
 
-                    cblob.DownloadToStream(file);
-                    changelbl.Visible = true;
-                    changelbl.Text = folderName;
-                }
+
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.ContentType = cblob.Properties.ContentType.ToString();
+                Response.AddHeader("content-disposition", string.Format("attachment; filename={0}", name));
+                Response.AddHeader("Content-Length", cblob.Properties.Length.ToString());
+                Response.BinaryWrite(memstream.ToArray());
+
+                StringWriter stringWriter = new StringWriter();
+                HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+                Response.Write(stringWriter.ToString());
+
+                Response.End();
+                changelbl.Text = cblob.Properties.Length.ToString();
+
+                changelbl.Visible = true;
+
+
+                /* Response.ContentType = cblob.Properties.ContentType.ToString();
+                 Response.AddHeader("Content-Disposision", "Attacment; filename = {0}" + name);
+                 Response.AddHeader("Content-Length", cblob.Properties.Length.ToString());
+                 Response.BinaryWrite(memstream.ToArray());
+
+                 StringWriter stringWriter = new StringWriter();
+                 HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
+                 Response.Write(stringWriter.ToString());
+
+                 Response.Flush();
+                 Response.End();                
+                 Response.Close();*/
+
             }
             else if (Downloadbtn.Text == "Save")
             {
