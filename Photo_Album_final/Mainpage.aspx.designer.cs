@@ -42,6 +42,24 @@ namespace Photo_Album_final
         protected global::System.Web.UI.WebControls.Button deletebtn;
 
         /// <summary>
+        /// cancelbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cancelbtn;
+
+        /// <summary>
+        /// addbtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button addbtn;
+
+        /// <summary>
         /// changelbl control.
         /// </summary>
         /// <remarks>
@@ -103,6 +121,24 @@ namespace Photo_Album_final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox changenametxb;
+
+        /// <summary>
+        /// users control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList users;
+
+        /// <summary>
+        /// Panel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel1;
 
         /// <summary>
         /// viewallpanel control.
@@ -177,6 +213,33 @@ namespace Photo_Album_final
         protected global::System.Web.UI.WebControls.Button btnupload;
 
         /// <summary>
+        /// search control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox search;
+
+        /// <summary>
+        /// btnsearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnsearch;
+
+        /// <summary>
+        /// btnviewall control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnviewall;
+
+        /// <summary>
         /// uploadpanel control.
         /// </summary>
         /// <remarks>
@@ -204,13 +267,13 @@ namespace Photo_Album_final
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// Image2 control.
+        /// ImgPrv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image2;
+        protected global::System.Web.UI.WebControls.Image ImgPrv;
 
         /// <summary>
         /// fototxb control.

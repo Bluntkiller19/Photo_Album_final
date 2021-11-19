@@ -83,16 +83,57 @@ namespace Photo_Album_final
                 logout.Text = "Login";
             }
         }
+        protected void btnsearch_Click(object sender, EventArgs e)
+        {
+            Panel1.Controls.Clear();
+            viewallpanel.Visible = false;
+            Panel1.Visible = true;
+            con = new SqlConnection(DbConnect);
+
+            con.Open();
+
+
+            sql = "SELECT * FROM photos WHERE photo_name = '" + search.Text + "'";
+
+            cmd = new SqlCommand(sql, con);
+            datar = cmd.ExecuteReader();
+
+            while (datar.Read())
+            {
+                ImageButton imgbtn = new ImageButton();
+                imgbtn.ImageUrl = datar.GetValue(3).ToString();
+                imgbtn.Width = Unit.Pixel(150);
+                imgbtn.Height = Unit.Pixel(150);
+                imgbtn.Style.Add("padding", "5px");
+                imgbtn.Style.Add("margin", "2px");
+                imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
+                Panel1.Controls.Add(imgbtn);
+            }
+
+            datar.Close();
+            cmd.Dispose();            
+            con.Close();
+            search.Text = "";
+        }
+        protected void btnviewall_Click(object sender, EventArgs e)
+        {
+            Panel1.Visible = false;
+            viewallpanel.Visible = true;
+        }
+
         string photourl;
         void imgbtn_Click(object sender, ImageClickEventArgs e)
         {
             photourl = ((ImageButton)sender).ImageUrl.ToString();
-            searchpanel.Visible = false;
+            
             Image1.ImageUrl = photourl;
 
-            viewallpanel.Visible = false;
             photopanel.Visible = true;
+            searchpanel.Visible = false;
+            Panel1.Visible = false;
+            viewallpanel.Visible = false;
         }
+
         protected void Backbtn_Click(object sender, EventArgs e)
         {
             viewallpanel.Visible = true;
@@ -103,6 +144,21 @@ namespace Photo_Album_final
             uploaderror.Visible = false;
             uploaderror.Text = "";
             fototxb.Text = "";
+
+            cancelbtn.Visible = false;
+            changenametxb.Text = "";
+            changenametxb.Visible = false;
+            changelbl.Visible = false;
+
+            deletebtn.Enabled = true;
+            addbtn.Enabled = true;
+            Sharebtn.Enabled = true;
+            changenamebtn.Enabled = true;
+            Downloadbtn.Enabled = true;
+            Sharebtn.Text = "Share";
+            Downloadbtn.Text = "Download";
+
+            users.Visible = false;
         }
 
         protected void logout_Click(object sender, EventArgs e)
@@ -393,19 +449,6 @@ namespace Photo_Album_final
                 changelbl.Visible = true;
 
 
-                /* Response.ContentType = cblob.Properties.ContentType.ToString();
-                 Response.AddHeader("Content-Disposision", "Attacment; filename = {0}" + name);
-                 Response.AddHeader("Content-Length", cblob.Properties.Length.ToString());
-                 Response.BinaryWrite(memstream.ToArray());
-
-                 StringWriter stringWriter = new StringWriter();
-                 HtmlTextWriter htmlTextWriter = new HtmlTextWriter(stringWriter);
-                 Response.Write(stringWriter.ToString());
-
-                 Response.Flush();
-                 Response.End();                
-                 Response.Close();*/
-
             }
             else if (Downloadbtn.Text == "Save")
             {
@@ -452,6 +495,13 @@ namespace Photo_Album_final
                             changenamebtn.Text = "Change name";
                             changenametxb.Text = "";
                             changenametxb.Visible = false;
+
+                            deletebtn.Enabled = true;
+                            addbtn.Enabled = true;
+                            Sharebtn.Enabled = true;
+                            changenamebtn.Enabled = true;
+                            cancelbtn.Visible = false;
+                            changelbl.Visible = false;
                         }
                     }
                     else
@@ -467,31 +517,148 @@ namespace Photo_Album_final
                 }
             }
         }
+        string myid = "";
+        string imageid = "";
+        string sendid = "";
+        String reciever = "";
         protected void Sharebtn_Click(object sender, EventArgs e)
         {
+            users.Items.Clear();
+            users.Items.Insert(0, new ListItem("--Select User--", "0"));
 
+            con.Open();
+
+            sql = "SELECT * FROM users WHERE user_name = '" + welcomelabel.Text + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+
+            if (datar.Read())
+            {
+                myid = datar.GetValue(2).ToString();
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
+            }
+
+            con = new SqlConnection(DbConnect);
+
+            con.Open();
+
+            sql = "SELECT * FROM photos WHERE photo_path = '" + Image1.ImageUrl.ToString() + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+
+            if (datar.Read())
+            {
+                imageid = datar.GetValue(1).ToString();
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
+            }
+
+            con = new SqlConnection(DbConnect);
+
+            con.Open();
+
+            sql = "SELECT* FROM users WHERE user_name != '" + myid + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+            while (datar.Read())
+            {
+                users.Items.Add(new ListItem(datar.GetValue(2).ToString(), datar.GetValue(0).ToString()));
+            }
+            cmd.Dispose();
+            con.Close();
+            datar.Close();
+
+            if (Sharebtn.Text == "Share")
+            {
+                users.Visible = true;
+                cancelbtn.Visible = true;
+                Sharebtn.Text = "Send";
+
+                changenamebtn.Enabled = false;
+                deletebtn.Enabled = false;
+                addbtn.Enabled = false;
+                Downloadbtn.Enabled = false;
+            }
+            else if (Sharebtn.Text == "Send")
+            {
+
+                if (reciever == "")
+                {
+                    changelbl.Visible = true;
+                    changelbl.Text = "Please select a user to send to!";
+                }
+                else
+                {
+                    
+                    con = new SqlConnection(DbConnect);
+                    con.Open();
+
+                    sql = "SELECT * FROM users WHERE user_name = '" + reciever + "'";
+
+                    cmd = new SqlCommand(sql, con);
+
+                    datar = cmd.ExecuteReader();
+
+                    if (datar.Read())
+                    {
+                        sendid = datar.GetValue(0).ToString();
+                        con.Close();
+                        datar.Close();
+                        cmd.Dispose();
+                    }
+
+                 
+                    con.Close();
+
+                    con.Open();
+
+                    adpt = new SqlDataAdapter();
+
+                    sqlinsert = "INSERT INTO send_photo (users_user_id, photos_photo_id, sender_name) values(  '" + sendid + "','" + imageid + "','" + myid + "')";
+
+                    cmd = new SqlCommand(sqlinsert, con);
+                    adpt.InsertCommand = new SqlCommand(sqlinsert, con);
+                    adpt.InsertCommand.ExecuteNonQuery();
+
+
+                    cmd.Dispose();
+                    con.Close();
+                    users.Visible = false;
+                    Sharebtn.Text = "Share";
+                    cancelbtn.Visible = false;
+
+                    changenamebtn.Enabled = true;
+                    deletebtn.Enabled = true;
+                    addbtn.Enabled = true;
+                    Downloadbtn.Enabled = true;
+                }
+            }
         }
         protected void changenamebtn_Click(object sender, EventArgs e)
         {
-            if (changenamebtn.Text == "Change name")
-            {
-                changenametxb.Visible = true;
-                Downloadbtn.Text = "Save";
-                changenamebtn.Text = "Cancel";
-            }
-            else if (changenamebtn.Text == "Cancel")
-            {
-                Downloadbtn.Text = "Download";
-                changenamebtn.Text = "Change name";
-                changenametxb.Text = "";
-                changenametxb.Visible = false;
-            }
-            else
-            {
-                changelbl.Visible = true;
-                changelbl.Text = "Enter a new name!";
-            }
+            changenamebtn.Enabled = false;
+            deletebtn.Enabled = false;
+            addbtn.Enabled = false;
+            Sharebtn.Enabled = false;
 
+            changenametxb.Visible = true;
+            Downloadbtn.Text = "Save";
+            cancelbtn.Visible = true;
+
+        }
+
+        protected void users_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            reciever = users.SelectedItem.Text;
         }
 
         protected void deletebtn_Click(object sender, EventArgs e)
@@ -529,5 +696,27 @@ namespace Photo_Album_final
             }
 
         }
+        protected void addbtn_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void cancelbtn_Click(object sender, EventArgs e)
+        {
+            Downloadbtn.Text = "Download";
+            Sharebtn.Text = "Share";
+            cancelbtn.Visible = false;
+            changenametxb.Text = "";
+            changenametxb.Visible = false;
+
+            changenamebtn.Enabled = true;
+            deletebtn.Enabled = true;
+            addbtn.Enabled = true;
+            Sharebtn.Enabled = true;
+            Downloadbtn.Enabled = true;
+
+            users.Visible = false;
+        }    
+
     }
+
 }

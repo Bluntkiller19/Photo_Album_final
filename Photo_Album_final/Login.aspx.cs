@@ -63,6 +63,8 @@ namespace Photo_Album_final
             {
                 Label2.Visible = true;
                 Label2.Text = "wrong details!";
+                Username.Text = "";
+                Password.Text = "";
             }
         }
 
@@ -155,48 +157,66 @@ namespace Photo_Album_final
                 createEmail.Text = "";
                 createPassword.Text = "";
                 name.Text = "";
+                cmd.Dispose();
+                con.Close();
 
             }
             else
             {
-                try
+                con = new SqlConnection(DbConnect);
+                con.Open();
+                sql = "SELECT * FROM users WHERE user_name = '" + name.Text + "'";
+                cmd = new SqlCommand(sql, con);
+                datar = cmd.ExecuteReader();
+                if (datar.Read())
                 {
-                    StorageCredentials creden = new StorageCredentials(accountname, connectionString);
-                    CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
-                    CloudBlobClient client = acc.CreateCloudBlobClient();
-                    CloudBlobContainer cont = client.GetContainerReference(name.Text.ToLower());
-                    cont.CreateIfNotExists();
-                    cont.SetPermissions(new BlobContainerPermissions
-                    {
-                        PublicAccess = BlobContainerPublicAccessType.Blob
-                    });
-
-                    con.Close();
-
-                    con.Open();
-
-                    adpt = new SqlDataAdapter();
-
-                    sqlinsert = "INSERT INTO users (user_email, user_name, user_password) values(  '" + createEmail.Text + "','" + name.Text + "','" + createPassword.Text + "')";
-
-                    cmd = new SqlCommand(sqlinsert, con);
-                    adpt.InsertCommand = new SqlCommand(sqlinsert, con);
-                    adpt.InsertCommand.ExecuteNonQuery();
+                    Label1.Visible = true;
+                    Label1.Text = "Username already exists!";
                     createEmail.Text = "";
                     createPassword.Text = "";
                     name.Text = "";
-
-
-                    cmd.Dispose();
-                    con.Close();
-                    Loginpanel.Visible = true;
-                    createpanel.Visible = false;
                 }
-                catch
+                else
                 {
+                    try
+                    {
+                        StorageCredentials creden = new StorageCredentials(accountname, connectionString);
+                        CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
+                        CloudBlobClient client = acc.CreateCloudBlobClient();
+                        CloudBlobContainer cont = client.GetContainerReference(name.Text.ToLower());
+                        cont.CreateIfNotExists();
+                        cont.SetPermissions(new BlobContainerPermissions
+                        {
+                            PublicAccess = BlobContainerPublicAccessType.Blob
+                        });
 
-                    Label1.Visible = true;
-                    Label1.Text = "Could not create account";
+                        con.Close();
+
+                        con.Open();
+
+                        adpt = new SqlDataAdapter();
+
+                        sqlinsert = "INSERT INTO users (user_email, user_name, user_password) values(  '" + createEmail.Text + "','" + name.Text + "','" + createPassword.Text + "')";
+
+                        cmd = new SqlCommand(sqlinsert, con);
+                        adpt.InsertCommand = new SqlCommand(sqlinsert, con);
+                        adpt.InsertCommand.ExecuteNonQuery();
+                        createEmail.Text = "";
+                        createPassword.Text = "";
+                        name.Text = "";
+
+
+                        cmd.Dispose();
+                        con.Close();
+                        Loginpanel.Visible = true;
+                        createpanel.Visible = false;
+                    }
+                    catch
+                    {
+
+                        Label1.Visible = true;
+                        Label1.Text = "Could not create account";
+                    }
                 }
 
             }

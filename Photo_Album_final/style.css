@@ -242,10 +242,10 @@ h2 {
 .displayimage {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%); 
+    left: 180px;
     height: 300px;
     width: 300px;
+    transform: translateX(-50%) translateY(-50%);
 }
 
 .labelwelcome {
@@ -286,8 +286,9 @@ h2 {
 }
 
 .btnupload {
+    height: 30px;
     position: absolute;
-    top: 15px;
+    top: 10px;
     Right: 20px;
     color: black;
     background-color: azure;
@@ -309,6 +310,7 @@ h2 {
 }
 
 .btnssave {
+    height: 30px;
     position: absolute;
     top: 15px;
     right: 20px;
@@ -354,34 +356,37 @@ h2 {
 }
 
 .downloadbtn {
+    height: 30px;
     bottom: 15px;
     right: 20px;
     color: azure;
     background-color: darkslategray;
     font-weight: bold;
     font-size: 15px;
-    width: 100px;
+    width: 120px;
     position: absolute;
     padding: 2px;
     border-radius: 30px;
 }
 
 .sharebtn {
-    top: 15px;
+    height: 30px;
+    top: 150px;
     right: 20px;
     color: azure;
     background-color: darkslategray;
     font-weight: bold;
     font-size: 15px;
-    width: 60px;
+    width: 120px;
     position: absolute;
     padding: 2px;
     border-radius: 30px;
 }
 
 .Changenamebtn {
-    bottom: 15px;
-    left: 20px;
+    height: 30px;
+    top: 15px;
+    right: 20px;
     color: azure;
     background-color: darkslategray;
     font-weight: bold;
@@ -403,15 +408,112 @@ h2 {
 }
 
 .deletebtn {
-    bottom: 50px;
+    height: 30px;
+    top: 105px;
     color: azure;
     background-color: darkslategray;
     font-weight: bold;
     font-size: 15px;
-    width: 100px;
+    width: 120px;
     position: absolute;
     padding: 2px;
     border-radius: 30px;
+    right: 20px;
+}
+
+.addbtn {
+    top: 60px;
+    height: 30px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 120px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+    right: 20px;
+}
+
+.cancelbtn {
+    bottom: 15px;
+    height: 30px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 120px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+    left: 20px;
+}
+
+.ImgPrv {
+    position: absolute;
+    top: 50%;
     left: 50%;
+    height: 300px;
+    width: 300px;
     transform: translateX(-50%) translateY(-50%);
+}
+
+.search {
+    position: absolute;
+    bottom: 15px;
+    right: 70px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.btnsearch {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    Right: 200px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 110px;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.viewallbtn {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 110px;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.searchtxt {
+    position: absolute;
+    top: 10px;
+    right: 400px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.photosearch {
+    position: absolute;
+    top: 145px;
+    left: 15px;
+    height: 480px;
+    width: 1325px;
+    /*transform: translateX(-50%) translateY(-50%);*/
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.5);
 }
