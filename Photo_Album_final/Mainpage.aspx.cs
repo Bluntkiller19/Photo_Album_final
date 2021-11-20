@@ -27,6 +27,11 @@ namespace Photo_Album_final
         String userid = "";
         string connectionString = ConfigurationManager.AppSettings["Storageconnection"].ToString();
         string accountname = "project2photostorage";
+        string myid = "";
+        string imageid = "";
+        string sendid = "";
+        String reciever = "";
+        string photourl;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -85,9 +90,6 @@ namespace Photo_Album_final
         }
         protected void btnsearch_Click(object sender, EventArgs e)
         {
-            Panel1.Controls.Clear();
-            viewallpanel.Visible = false;
-            Panel1.Visible = true;
             con = new SqlConnection(DbConnect);
 
             con.Open();
@@ -98,16 +100,21 @@ namespace Photo_Album_final
             cmd = new SqlCommand(sql, con);
             datar = cmd.ExecuteReader();
 
-            while (datar.Read())
+            if (datar.Read())
             {
-                ImageButton imgbtn = new ImageButton();
-                imgbtn.ImageUrl = datar.GetValue(3).ToString();
-                imgbtn.Width = Unit.Pixel(150);
-                imgbtn.Height = Unit.Pixel(150);
-                imgbtn.Style.Add("padding", "5px");
-                imgbtn.Style.Add("margin", "2px");
-                imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
-                Panel1.Controls.Add(imgbtn);
+                Image1.ImageUrl = datar.GetValue(3).ToString();
+
+                photopanel.Visible = true;
+                searchpanel.Visible = false;
+                viewallpanel.Visible = false;
+            }
+            else
+            {
+                changelbl.Visible = true;
+                changelbl.Text = "No image found";
+                photopanel.Visible = true;
+                searchpanel.Visible = false;
+                viewallpanel.Visible = false;
             }
 
             datar.Close();
@@ -115,25 +122,17 @@ namespace Photo_Album_final
             con.Close();
             search.Text = "";
         }
-        protected void btnviewall_Click(object sender, EventArgs e)
+        protected void imgbtn_Click(object sender, ImageClickEventArgs e)
         {
-            Panel1.Visible = false;
-            viewallpanel.Visible = true;
-        }
 
-        string photourl;
-        void imgbtn_Click(object sender, ImageClickEventArgs e)
-        {
             photourl = ((ImageButton)sender).ImageUrl.ToString();
             
             Image1.ImageUrl = photourl;
 
             photopanel.Visible = true;
             searchpanel.Visible = false;
-            Panel1.Visible = false;
             viewallpanel.Visible = false;
         }
-
         protected void Backbtn_Click(object sender, EventArgs e)
         {
             viewallpanel.Visible = true;
@@ -160,7 +159,6 @@ namespace Photo_Album_final
 
             users.Visible = false;
         }
-
         protected void logout_Click(object sender, EventArgs e)
         {
             if (logout.Text == "Logout")
@@ -517,10 +515,6 @@ namespace Photo_Album_final
                 }
             }
         }
-        string myid = "";
-        string imageid = "";
-        string sendid = "";
-        String reciever = "";
         protected void Sharebtn_Click(object sender, EventArgs e)
         {
             users.Items.Clear();
@@ -655,12 +649,30 @@ namespace Photo_Album_final
             cancelbtn.Visible = true;
 
         }
-
         protected void users_SelectedIndexChanged(object sender, EventArgs e)
         {
             reciever = users.SelectedItem.Text;
         }
+        protected void search_TextChanged(object sender, EventArgs e)
+        {
 
+        }
+        protected void btnviewall_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Mainpage.aspx");
+        }
+        protected void btnshared_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Shared.aspx");
+        }
+        protected void btnrecieved_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Recieved.aspx");
+        }
+        protected void btnalbums_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Albums.aspx");
+        }
         protected void deletebtn_Click(object sender, EventArgs e)
         {
             string url = Image1.ImageUrl.ToString();

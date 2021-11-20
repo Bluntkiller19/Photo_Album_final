@@ -122,12 +122,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Albums.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Mainpage.aspx" />
+    <Content Include="Recieved.aspx" />
+    <Content Include="Shared.aspx" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Albums.aspx.cs">
+      <DependentUpon>Albums.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Albums.aspx.designer.cs">
+      <DependentUpon>Albums.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,6 +153,20 @@
       <DependentUpon>Mainpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recieved.aspx.cs">
+      <DependentUpon>Recieved.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recieved.aspx.designer.cs">
+      <DependentUpon>Recieved.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Shared.aspx.cs">
+      <DependentUpon>Shared.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shared.aspx.designer.cs">
+      <DependentUpon>Shared.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

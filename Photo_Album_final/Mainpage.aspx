@@ -41,7 +41,6 @@
                 <asp:DropDownList ID="users" runat="server" placeholder="Select user to share with" Visible="False" CssClass="search" OnSelectedIndexChanged="users_SelectedIndexChanged" ></asp:DropDownList>
             </asp:Panel>
 
-            <asp:Panel ID="Panel1" runat="server" class="photosearch" Visible="False"></asp:Panel>
             <asp:Panel ID="viewallpanel" runat="server" class="allpanel" Visible="True"></asp:Panel>      
              
             <asp:Panel ID="navpanel" runat="server" class="navpanel">  
@@ -50,12 +49,14 @@
                 <asp:Button ID="logout" CssClass="btnlogout" runat="server"  Text="Logout" OnClick="logout_Click" />
             </asp:Panel>
 
-            <asp:Panel ID="searchpanel" runat="server" class="searchpanel" Visible="True">   
-                <asp:Label ID="Label1" CssClass="labelwelcome" runat="server" ></asp:Label>                    
+            <asp:Panel ID="searchpanel" runat="server" class="searchpanel" Visible="True">                      
                 <asp:Button ID="btnupload" CssClass="btnupload" runat="server"  Text="upload photo" OnClick="btnupload_Click" />
-                <asp:TextBox ID="search" runat="server" placeholder="Enter photo name" CssClass="searchtxt" Visible="True" ></asp:TextBox>
+                <asp:TextBox ID="search" runat="server" placeholder="Enter photo name" CssClass="searchtxt" Visible="True" OnTextChanged="search_TextChanged" ></asp:TextBox>
                 <asp:Button ID="btnsearch" CssClass="btnsearch" runat="server"  Text="search photo" OnClick="btnsearch_Click" />
                 <asp:Button ID="btnviewall" CssClass="viewallbtn" runat="server"  Text="viewall" OnClick="btnviewall_Click" />
+                <asp:Button ID="btnalbums" CssClass="Albumbtn" runat="server"  Text="Albums" OnClick="btnalbums_Click"  />
+                <asp:Button ID="btnshared" CssClass="sharedbtn" runat="server"  Text="Shared" OnClick="btnshared_Click"  />
+                <asp:Button ID="btnrecieved" CssClass="recievedbtn" runat="server"  Text="Recieved" OnClick="btnrecieved_Click"  />
             </asp:Panel>
   
             <asp:Panel ID="uploadpanel" runat="server" Visible="False" CssClass="photopanel">.

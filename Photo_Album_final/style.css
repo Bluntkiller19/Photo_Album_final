@@ -473,7 +473,7 @@ h2 {
     height: 30px;
     position: absolute;
     top: 10px;
-    Right: 200px;
+    Right: 150px;
     color: black;
     background-color: azure;
     font-weight: bold;
@@ -500,7 +500,8 @@ h2 {
 .searchtxt {
     position: absolute;
     top: 10px;
-    right: 400px;
+    height: 25px;
+    right: 280px;
     background-color: azure;
     width: 180px;
     padding: 2px;
@@ -516,4 +517,46 @@ h2 {
     /*transform: translateX(-50%) translateY(-50%);*/
     margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Albumbtn {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 150px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 110px;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.sharedbtn {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 280px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 110px;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.recievedbtn {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 410px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 110px;
+    padding: 2px;
+    border-radius: 30px;
 }
