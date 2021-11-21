@@ -21,7 +21,7 @@
                 <asp:TextBox ID="createEmail" class="alignpassword" runat="server" placeholder = "Enter Email"></asp:TextBox>
             </div>
               <div >
-                <asp:TextBox ID="createPassword" class="aligncreatepassword" runat="server" placeholder = "Enter password"></asp:TextBox>
+                <asp:TextBox ID="createPassword" class="aligncreatepassword" runat="server" placeholder = "Enter password" TextMode="Password"></asp:TextBox>
             </div>
             <div >
                 <asp:Button ID="signupbtn" class="btnsignup" runat="server" Text="Sign up" OnClick="Signupbtn"/>
@@ -41,7 +41,7 @@
                 <asp:TextBox ID="Username" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
             </div>
             <div >
-                <asp:TextBox ID="Password" class="alignpassword" runat="server" placeholder = "Enter password"></asp:TextBox>
+                <asp:TextBox ID="Password" class="alignpassword" runat="server" placeholder = "Enter password" TextMode="Password"></asp:TextBox>
             </div>
             <div >
                 <asp:Button ID="btnLogin" class="btn" runat="server" Text="Login" OnClick="btnLogin_Click" />
@@ -63,7 +63,7 @@
                 <asp:TextBox ID="resetEmail" class="alignusername" runat="server" placeholder = "Enter Email"></asp:TextBox>
             </div>
             <div >
-                <asp:TextBox ID="resetpasword" class="alignpassword" runat="server" placeholder = "Enter password"></asp:TextBox>
+                <asp:TextBox ID="resetpasword" class="alignpassword" runat="server" placeholder = "Enter password" TextMode="Password"></asp:TextBox>
             </div>
             <div >
                 <asp:Button ID="submit" class="btn" runat="server" Text="submit" OnClick="submit_Click" />

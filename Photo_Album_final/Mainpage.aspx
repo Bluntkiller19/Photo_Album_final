@@ -56,7 +56,8 @@
                 <asp:Button ID="btnviewall" CssClass="viewallbtn" runat="server"  Text="viewall" OnClick="btnviewall_Click" />
                 <asp:Button ID="btnalbums" CssClass="Albumbtn" runat="server"  Text="Albums" OnClick="btnalbums_Click"  />
                 <asp:Button ID="btnshared" CssClass="sharedbtn" runat="server"  Text="Shared" OnClick="btnshared_Click"  />
-                <asp:Button ID="btnrecieved" CssClass="recievedbtn" runat="server"  Text="Recieved" OnClick="btnrecieved_Click"  />
+                <asp:Button ID="btnrecieved" CssClass="recievedbtn" runat="server"  Text="Recieved fotos" OnClick="btnrecieved_Click"  />
+                 <asp:Button ID="btnrecieved2" CssClass="btnRecieveAlbum" runat="server"  Text="Recieved albums" OnClick="btnrecieved2_Click"  />
             </asp:Panel>
   
             <asp:Panel ID="uploadpanel" runat="server" Visible="False" CssClass="photopanel">.

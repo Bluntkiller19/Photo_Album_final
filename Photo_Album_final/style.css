@@ -556,7 +556,60 @@ h2 {
     background-color: azure;
     font-weight: bold;
     font-size: 15px;
+    width: 150px;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.btnsharealbum {
+    height: 30px;
+    position: absolute;
+    bottom: 15px;
+    right: 70px;
+    color: azure;
+    background-color: darkslategray;
+    font-weight: bold;
+    font-size: 15px;
+    width: 75px;
+    position: absolute;
+    padding: 2px;
+    border-radius: 30px;
+}
+
+.searchalbum {
+    position: absolute;
+    top: 30px;
+    right: 70px;
+    background-color: azure;
+    width: 180px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.btnsharealbum2 {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 280px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
     width: 110px;
+    padding: 2px;
+    border-radius: 30px
+}
+
+.btnRecieveAlbum {
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 620px;
+    color: black;
+    background-color: azure;
+    font-weight: bold;
+    font-size: 15px;
+    width: 150px;
     padding: 2px;
     border-radius: 30px;
 }

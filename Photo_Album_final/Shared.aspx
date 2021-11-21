@@ -11,9 +11,18 @@
     <form id="form1" runat="server">
         <div>
             <asp:Panel ID="viewallpanel" runat="server" class="allpanel" Visible="True"  >
+                <p>Fotos you shared with other users</p>
                 <asp:GridView ID="Shareview" runat ="server" AutoGenerateColumns="False" OnRowDeleting="OnRowDeleting" >
                     <Columns>
                         <asp:BoundField DataField="photo_name" HeaderText="Photo" />
+                        <asp:BoundField DataField="user_name" HeaderText="Sended to" />
+                        <asp:CommandField ShowDeleteButton="true" />
+                    </Columns>
+                </asp:GridView>
+                <p>albums you shared with other users</p>
+              <asp:GridView ID="album" runat ="server" AutoGenerateColumns="False" OnRowDeleting="OnRowDeletingalbum" >
+                    <Columns>
+                        <asp:BoundField DataField="album_name" HeaderText="album" />
                         <asp:BoundField DataField="user_name" HeaderText="Sended to" />
                         <asp:CommandField ShowDeleteButton="true" />
                     </Columns>
@@ -31,6 +40,7 @@
                 <asp:Button ID="btnalbums" CssClass="Albumbtn" runat="server"  Text="Albums" OnClick="btnalbums_Click"  />
                 <asp:Button ID="btnshared" CssClass="sharedbtn" runat="server"  Text="Shared" OnClick="btnshared_Click"  />
                 <asp:Button ID="btnrecieved" CssClass="recievedbtn" runat="server"  Text="Recieved" OnClick="btnrecieved_Click"  />
+                <asp:Button ID="btnrecieved2" CssClass="btnRecieveAlbum" runat="server"  Text="Recieved albums" OnClick="btnrecieved2_Click"  />
             </asp:Panel>
         </div>
     </form>

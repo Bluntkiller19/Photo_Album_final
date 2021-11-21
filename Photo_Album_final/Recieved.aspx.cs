@@ -204,9 +204,7 @@ namespace Photo_Album_final
 
                 con.Open();
 
-                sql = "SELECT * FROM users ";
-                sql += "JOIN photos ON users.user_id = photos.users_user_id ";
-                sql += "WHERE users.user_id = photos.users_user_id";
+                sql = "SELECT * FROM send_photo WHERE users_user_id = '" + userid + "'";
 
                 cmd = new SqlCommand(sql, con);
 
@@ -267,8 +265,8 @@ namespace Photo_Album_final
                 Response.End();
                 changelbl.Text = cblob.Properties.Length.ToString();
 
-                changelbl.Visible = true;
-                changelbl.Text = filename;
+                /*changelbl.Visible = true;
+                changelbl.Text = filename;*/
         }
         protected void btnviewall_Click(object sender, EventArgs e)
         {
@@ -285,6 +283,10 @@ namespace Photo_Album_final
         protected void btnalbums_Click(object sender, EventArgs e)
         {
             Response.Redirect("Albums.aspx");
+        }
+        protected void btnrecieved2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Recieved2.aspx");
         }
     }
 }

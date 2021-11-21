@@ -22,7 +22,7 @@ namespace Photo_Album_final
         SqlConnection con;
         SqlCommand cmd;
         SqlDataReader datar;
-        String sql, sqlinsert, sqlupdate, sqldelete;
+        String sql, sqlinsert, sqlupdate, sqldelete, sql2;
         SqlDataAdapter adpt;
         String userid = "";
         string connectionString = ConfigurationManager.AppSettings["Storageconnection"].ToString();
@@ -68,10 +68,34 @@ namespace Photo_Album_final
                         }
                     }
                 }
+                con.Close();
                 // specify the data source for the GridView    
                 Shareview.DataSource = table;
                 // bind the data now    
                 Shareview.DataBind();
+
+                DataTable table2 = new DataTable();
+                using (SqlConnection conn = new SqlConnection(DbConnect))
+                {
+                    // write the sql statement to execute    
+                    sql2 = "SELECT user_name, album_name FROM send_album ";
+                    sql2 += "JOIN album ON send_album.album_album_id = album.album_id ";
+                    sql2 += "JOIN users ON send_album.users_user_id = users.user_id ";
+                    sql2 += "WHERE send_album.sender_name ='" + welcomelabel.Text + "'";
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        // get the adapter object and attach the command object to it    
+                        using (SqlDataAdapter ad = new SqlDataAdapter(cmd))
+                        {
+                            // fire Fill method to fetch the data and fill into DataTable    
+                            ad.Fill(table2);
+                        }
+                    }
+                }
+                // specify the data source for the GridView    
+                album.DataSource = table2;
+                // bind the data now    
+                album.DataBind();
             }
             else
             {
@@ -134,6 +158,59 @@ namespace Photo_Album_final
             Response.Redirect("Shared.aspx");
 
         }
+        protected void OnRowDeletingalbum(object sender, GridViewDeleteEventArgs e)
+        {
+            String username = album.Rows[e.RowIndex].Cells[1].Text;
+            String photoname = album.Rows[e.RowIndex].Cells[0].Text;
+            String photoid = "", recuserid = "";
+
+            welcomelabel.Text = username;
+            con.Close();
+            con.Open();
+            sql = "SELECT * from users where user_name = '" + username + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+            if (datar.Read())
+            {
+                recuserid = datar.GetValue(0).ToString();
+
+            }
+            con.Close();
+            datar.Close();
+            cmd.Dispose();
+
+            con.Open();
+            sql = "SELECT * from album where album_name = '" + photoname + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+            if (datar.Read())
+            {
+                photoid = datar.GetValue(1).ToString();
+
+            }
+            con.Close();
+            datar.Close();
+            cmd.Dispose();
+
+            con.Open();
+
+            string sqldelete = "DELETE send_album WHERE users_user_id = '" + recuserid + "' AND album_album_id ='" + photoid + "'";
+            adpt = new SqlDataAdapter();
+            cmd = new SqlCommand(sqldelete, con);
+
+            adpt.DeleteCommand = new SqlCommand(sqldelete, con);
+            adpt.DeleteCommand.ExecuteNonQuery();
+            con.Close();
+            datar.Close();
+            cmd.Dispose();
+
+            Response.Redirect("Shared.aspx");
+
+        }
         protected void logout_Click(object sender, EventArgs e)
         {
             if (logout.Text == "Logout")
@@ -162,6 +239,10 @@ namespace Photo_Album_final
         protected void btnalbums_Click(object sender, EventArgs e)
         {
             Response.Redirect("Albums.aspx");
+        }
+        protected void btnrecieved2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Recieved2.aspx");
         }
     }
 }

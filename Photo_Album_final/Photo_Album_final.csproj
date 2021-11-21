@@ -126,6 +126,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Mainpage.aspx" />
     <Content Include="Recieved.aspx" />
+    <Content Include="Recieved2.aspx" />
     <Content Include="Shared.aspx" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
@@ -159,6 +160,13 @@
     </Compile>
     <Compile Include="Recieved.aspx.designer.cs">
       <DependentUpon>Recieved.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Recieved2.aspx.cs">
+      <DependentUpon>Recieved2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recieved2.aspx.designer.cs">
+      <DependentUpon>Recieved2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Shared.aspx.cs">
       <DependentUpon>Shared.aspx</DependentUpon>

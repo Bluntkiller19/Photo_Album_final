@@ -30,13 +30,16 @@ namespace Photo_Album_final
         string myid = "";
         string imageid = "";
         string sendid = "";
-        String reciever = "";
+        string reciever = "";
+        String albumname;
         string photourl;
+        ImageButton imgbtn2 = new ImageButton();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Username"] != null)
             {
+
                 con = new SqlConnection(DbConnect);
 
 
@@ -57,28 +60,64 @@ namespace Photo_Album_final
                 datar.Close();
                 cmd.Dispose();
 
-                con.Open();
-
-                sql = "SELECT * FROM photos where users_user_id ='" + userid + "'";
-
-                cmd = new SqlCommand(sql, con);
-
-                datar = cmd.ExecuteReader();
-
-                while (datar.Read())
+                if (Session["foto"] != null)
                 {
-                    ImageButton imgbtn = new ImageButton();
-                    imgbtn.ImageUrl = datar.GetValue(3).ToString();
-                    imgbtn.Width = Unit.Pixel(150);
-                    imgbtn.Height = Unit.Pixel(150);
-                    imgbtn.Style.Add("padding", "5px");
-                    imgbtn.Style.Add("margin", "2px");
-                    imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
-                    viewallpanel.Controls.Add(imgbtn);
+                    if (!IsPostBack)
+                    {
+                        con = new SqlConnection(DbConnect);
+
+                        con.Open();
+
+                        sql = "SELECT * FROM photos WHERE photo_name = '" + Session["foto"].ToString() + "' AND users_user_id = '" + userid + "'";
+
+                        cmd = new SqlCommand(sql, con);
+                        datar = cmd.ExecuteReader();
+
+                        while (datar.Read())
+                        {
+                            ImageButton imgbtn = new ImageButton();
+                            imgbtn.ImageUrl = datar.GetValue(3).ToString();
+                            imgbtn.Width = Unit.Pixel(150);
+                            imgbtn.Height = Unit.Pixel(150);
+                            imgbtn.Style.Add("padding", "5px");
+                            imgbtn.Style.Add("margin", "2px");
+                            imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
+                            viewallpanel.Controls.Add(imgbtn);
+                        }
+
+                        con.Close();
+                        datar.Close();
+                        cmd.Dispose();
+                        Session["foto"] = null;
+                    }
                 }
-                datar.Close();
-                cmd.Dispose();
-                con.Close();
+                else
+                {
+
+
+                    con.Open();
+
+                    sql = "SELECT * FROM photos where users_user_id ='" + userid + "'";
+
+                    cmd = new SqlCommand(sql, con);
+
+                    datar = cmd.ExecuteReader();
+
+                    while (datar.Read())
+                    {
+                        ImageButton imgbtn = new ImageButton();
+                        imgbtn.ImageUrl = datar.GetValue(3).ToString();
+                        imgbtn.Width = Unit.Pixel(150);
+                        imgbtn.Height = Unit.Pixel(150);
+                        imgbtn.Style.Add("padding", "5px");
+                        imgbtn.Style.Add("margin", "2px");
+                        imgbtn.Click += new ImageClickEventHandler(imgbtn_Click);
+                        viewallpanel.Controls.Add(imgbtn);
+                    }
+                    datar.Close();
+                    cmd.Dispose();
+                    con.Close();
+                }
             }
             else
             {
@@ -90,37 +129,46 @@ namespace Photo_Album_final
         }
         protected void btnsearch_Click(object sender, EventArgs e)
         {
-            con = new SqlConnection(DbConnect);
+                
+                con = new SqlConnection(DbConnect);
 
-            con.Open();
+                con.Open();
 
+                
+                sql = "SELECT * FROM photos WHERE photo_name = '" + search.Text + "' AND users_user_id = '" + userid + "'";
 
-            sql = "SELECT * FROM photos WHERE photo_name = '" + search.Text + "'";
+                cmd = new SqlCommand(sql, con);
+                datar = cmd.ExecuteReader();
 
-            cmd = new SqlCommand(sql, con);
-            datar = cmd.ExecuteReader();
+                if (datar.Read())
+                {
+                    Session["foto"] = search.Text;
+                    Response.Redirect("Mainpage.aspx");
+                }
+                else
+                {
+                    viewallpanel.Controls.Clear();
+                    Label error = new Label();
+                    error.Text = "Could not find foto! click on view all to show all photos!";
+                    viewallpanel.Controls.Add(error);  
+                }
 
-            if (datar.Read())
-            {
-                Image1.ImageUrl = datar.GetValue(3).ToString();
+                datar.Close();
+                cmd.Dispose();
+                con.Close();
+                search.Text = "";
+        }
+        protected void imgbtn2_Click(object sender, ImageClickEventArgs e)
+        {
+
+                photourl = ((ImageButton)sender).ImageUrl.ToString();
+
+                Image1.ImageUrl = photourl;
 
                 photopanel.Visible = true;
                 searchpanel.Visible = false;
                 viewallpanel.Visible = false;
-            }
-            else
-            {
-                changelbl.Visible = true;
-                changelbl.Text = "No image found";
-                photopanel.Visible = true;
-                searchpanel.Visible = false;
-                viewallpanel.Visible = false;
-            }
-
-            datar.Close();
-            cmd.Dispose();            
-            con.Close();
-            search.Text = "";
+                Session["foto"] = null;
         }
         protected void imgbtn_Click(object sender, ImageClickEventArgs e)
         {
@@ -156,8 +204,9 @@ namespace Photo_Album_final
             Downloadbtn.Enabled = true;
             Sharebtn.Text = "Share";
             Downloadbtn.Text = "Download";
+            addbtn.Text = "Add to album";
 
-            users.Visible = false;
+            users.Visible = true;
         }
         protected void logout_Click(object sender, EventArgs e)
         {
@@ -397,6 +446,26 @@ namespace Photo_Album_final
 
             if (Downloadbtn.Text == "Download")
             {
+                String filename = "";
+
+
+                con = new SqlConnection(DbConnect);
+
+                con.Open();
+
+                sql = "SELECT * FROM send_photo WHERE users_user_id = '" + userid + "'";
+
+                cmd = new SqlCommand(sql, con);
+
+                datar = cmd.ExecuteReader();
+
+                if (datar.Read())
+                {
+                    filename = datar.GetValue(2).ToString();
+                }
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
 
                 con = new SqlConnection(DbConnect);
 
@@ -420,7 +489,7 @@ namespace Photo_Album_final
                 StorageCredentials creden = new StorageCredentials(accountname, connectionString);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
-                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
+                CloudBlobContainer cont = client.GetContainerReference(filename.ToLower());
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(Imagename);
 
@@ -442,9 +511,6 @@ namespace Photo_Album_final
                 Response.Write(stringWriter.ToString());
 
                 Response.End();
-                changelbl.Text = cblob.Properties.Length.ToString();
-
-                changelbl.Visible = true;
 
 
             }
@@ -579,7 +645,6 @@ namespace Photo_Album_final
 
                 changenamebtn.Enabled = false;
                 deletebtn.Enabled = false;
-                addbtn.Enabled = false;
                 Downloadbtn.Enabled = false;
             }
             else if (Sharebtn.Text == "Send")
@@ -592,7 +657,7 @@ namespace Photo_Album_final
                 }
                 else
                 {
-                    
+
                     con = new SqlConnection(DbConnect);
                     con.Open();
 
@@ -610,7 +675,7 @@ namespace Photo_Album_final
                         cmd.Dispose();
                     }
 
-                 
+
                     con.Close();
 
                     con.Open();
@@ -632,7 +697,6 @@ namespace Photo_Album_final
 
                     changenamebtn.Enabled = true;
                     deletebtn.Enabled = true;
-                    addbtn.Enabled = true;
                     Downloadbtn.Enabled = true;
                 }
             }
@@ -649,28 +713,28 @@ namespace Photo_Album_final
             cancelbtn.Visible = true;
 
         }
-        protected void users_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            reciever = users.SelectedItem.Text;
-        }
         protected void search_TextChanged(object sender, EventArgs e)
         {
 
         }
         protected void btnviewall_Click(object sender, EventArgs e)
         {
+            Session["foto"] = null;
             Response.Redirect("Mainpage.aspx");
         }
         protected void btnshared_Click(object sender, EventArgs e)
         {
+            Session["foto"] = null;
             Response.Redirect("Shared.aspx");
         }
         protected void btnrecieved_Click(object sender, EventArgs e)
         {
+            Session["foto"] = null;
             Response.Redirect("Recieved.aspx");
         }
         protected void btnalbums_Click(object sender, EventArgs e)
         {
+            Session["foto"] = null;
             Response.Redirect("Albums.aspx");
         }
         protected void deletebtn_Click(object sender, EventArgs e)
@@ -710,7 +774,116 @@ namespace Photo_Album_final
         }
         protected void addbtn_Click(object sender, EventArgs e)
         {
+            users.Items.Clear();
+            users.Items.Insert(0, new ListItem("--Select album--", "0"));
 
+
+            con = new SqlConnection(DbConnect);
+
+            con.Open();
+
+            sql = "SELECT * FROM photos WHERE photo_path = '" + Image1.ImageUrl.ToString() + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+
+            if (datar.Read())
+            {
+                Session["imageid"] = datar.GetValue(1).ToString();
+                con.Close();
+                datar.Close();
+                cmd.Dispose();
+            }
+
+            con = new SqlConnection(DbConnect);
+
+            con.Open();
+
+            sql = "SELECT* FROM album WHERE users_user_id = '" + userid + "'";
+
+            cmd = new SqlCommand(sql, con);
+
+            datar = cmd.ExecuteReader();
+            while (datar.Read())
+            {
+                users.Items.Add(new ListItem(datar.GetValue(2).ToString(), datar.GetValue(0).ToString()));
+            }
+            cmd.Dispose();
+            con.Close();
+            datar.Close();
+
+            if (addbtn.Text == "Add to album")
+            {
+                addbtn.Text = "Add";
+                users.Visible = true;
+                cancelbtn.Visible = true;
+
+                Sharebtn.Enabled = false;
+                changenamebtn.Enabled = false;
+                deletebtn.Enabled = false;
+                Downloadbtn.Enabled = false;
+            }
+            else if (addbtn.Text == "Add")
+            {
+
+                if (albumname == "")
+                {
+                    changelbl.Visible = true;
+                    changelbl.Text = "Please select a album!";
+                }
+                else
+                {
+
+                    con = new SqlConnection(DbConnect);
+                    con.Open();
+
+                    sql = "SELECT * FROM album WHERE album_name = '" + reciever + "'";
+
+                    cmd = new SqlCommand(sql, con);
+
+                    datar = cmd.ExecuteReader();
+
+                    if (datar.Read())
+                    {
+                        sendid = datar.GetValue(1).ToString();
+                        con.Close();
+                        datar.Close();
+                        cmd.Dispose();
+                    }
+
+
+
+                    con.Close();
+                    con.Open();
+                    adpt = new SqlDataAdapter();
+
+                    sqlinsert = "INSERT INTO album_photos (photos_photo_id, album_album_id) values( '" + Session["imageid"].ToString() + "','" + sendid + "')";
+
+                    cmd = new SqlCommand(sqlinsert, con);
+                    adpt.InsertCommand = new SqlCommand(sqlinsert, con);
+                    adpt.InsertCommand.ExecuteNonQuery();
+
+                    cmd.Dispose();
+                    con.Close();
+                    users.Visible = false;
+                    users.Visible = false;
+                    Sharebtn.Text = "Share";
+                    cancelbtn.Visible = false;
+
+                    changenamebtn.Enabled = true;
+                    deletebtn.Enabled = true;
+                    Downloadbtn.Enabled = true;
+                    Sharebtn.Enabled = true;
+                }
+                changelbl.Visible = true;
+                changelbl.Text = reciever;
+            }
+        
+        }
+        protected void users_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            reciever = users.SelectedItem.Text;
         }
         protected void cancelbtn_Click(object sender, EventArgs e)
         {
@@ -727,7 +900,11 @@ namespace Photo_Album_final
             Downloadbtn.Enabled = true;
 
             users.Visible = false;
-        }    
+        }
+        protected void btnrecieved2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Recieved2.aspx");
+        }
 
     }
 

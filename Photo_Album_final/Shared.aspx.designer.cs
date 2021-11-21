@@ -42,6 +42,15 @@ namespace Photo_Album_final
         protected global::System.Web.UI.WebControls.GridView Shareview;
 
         /// <summary>
+        /// album control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView album;
+
+        /// <summary>
         /// navpanel control.
         /// </summary>
         /// <remarks>
@@ -121,5 +130,14 @@ namespace Photo_Album_final
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnrecieved;
+
+        /// <summary>
+        /// btnrecieved2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnrecieved2;
     }
 }
