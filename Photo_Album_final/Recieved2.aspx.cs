@@ -201,7 +201,7 @@ namespace Photo_Album_final
 
             con.Open();
 
-            sql = "SELECT * FROM send_photo WHERE users_user_id = '" + userid + "'";
+            sql = "SELECT * FROM send_album WHERE users_user_id = '" + userid + "'";
 
             cmd = new SqlCommand(sql, con);
 

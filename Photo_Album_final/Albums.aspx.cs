@@ -310,23 +310,6 @@ namespace Photo_Album_final
                 String filename = "";
 
 
-                con = new SqlConnection(DbConnect);
-
-                con.Open();
-
-                sql = "SELECT * FROM send_photo WHERE users_user_id = '" + userid + "'";
-
-                cmd = new SqlCommand(sql, con);
-
-                datar = cmd.ExecuteReader();
-
-                if (datar.Read())
-                {
-                    filename = datar.GetValue(2).ToString();
-                }
-                con.Close();
-                datar.Close();
-                cmd.Dispose();
 
                 con = new SqlConnection(DbConnect);
 
@@ -350,7 +333,7 @@ namespace Photo_Album_final
                 StorageCredentials creden = new StorageCredentials(accountname, connectionString);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
-                CloudBlobContainer cont = client.GetContainerReference(filename.ToLower());
+                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(Imagename);
 

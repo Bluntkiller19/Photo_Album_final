@@ -38,7 +38,7 @@
                 <asp:Button ID="Sharebtn" runat="server" Text="Share" CssClass="sharebtn" OnClick="Sharebtn_Click" />
                 <asp:Button ID="changenamebtn" runat="server" Text="Change name" CssClass="Changenamebtn" OnClick="changenamebtn_Click" />
                 <asp:TextBox ID="changenametxb" runat="server" placeholder="Enter new photo name" CssClass="changename" Visible="False"></asp:TextBox>
-                <asp:DropDownList ID="users" runat="server" placeholder="Select user to share with" Visible="False" CssClass="search" OnSelectedIndexChanged="users_SelectedIndexChanged" ></asp:DropDownList>
+                <asp:DropDownList ID="users" runat="server" placeholder="Select user to share with" Visible="false" CssClass="search" OnSelectedIndexChanged="users_SelectedIndexChanged" ></asp:DropDownList>
             </asp:Panel>
 
             <asp:Panel ID="viewallpanel" runat="server" class="allpanel" Visible="True"></asp:Panel>      

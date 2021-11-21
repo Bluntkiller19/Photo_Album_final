@@ -144,6 +144,7 @@ namespace Photo_Album_final
                 {
                     Session["foto"] = search.Text;
                     Response.Redirect("Mainpage.aspx");
+                    search.Text = "";
                 }
                 else
                 {
@@ -156,7 +157,7 @@ namespace Photo_Album_final
                 datar.Close();
                 cmd.Dispose();
                 con.Close();
-                search.Text = "";
+                
         }
         protected void imgbtn2_Click(object sender, ImageClickEventArgs e)
         {
@@ -206,7 +207,7 @@ namespace Photo_Album_final
             Downloadbtn.Text = "Download";
             addbtn.Text = "Add to album";
 
-            users.Visible = true;
+            users.Visible = false;
         }
         protected void logout_Click(object sender, EventArgs e)
         {
@@ -489,7 +490,7 @@ namespace Photo_Album_final
                 StorageCredentials creden = new StorageCredentials(accountname, connectionString);
                 CloudStorageAccount acc = new CloudStorageAccount(creden, useHttps: true);
                 CloudBlobClient client = acc.CreateCloudBlobClient();
-                CloudBlobContainer cont = client.GetContainerReference(filename.ToLower());
+                CloudBlobContainer cont = client.GetContainerReference(welcomelabel.Text.ToLower());
 
                 CloudBlockBlob cblob = cont.GetBlockBlobReference(Imagename);
 
